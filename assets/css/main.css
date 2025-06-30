@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+:root {
+  --spacing-2: 0.5rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+
+  --color-gray-50: #f9fafb;
+  --color-gray-900: #111827;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-800: #1f2937;
+  --color-white: #ffffff;
+
+  --font-weight-medium: 400;
+
+  --border-radius-lg: 0.5rem;
+  --transition-property-colors: color, background-color, border-color,
+    text-decoration-color, fill, stroke;
+  --transition-duration-200: 200ms;
+  --box-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+  /* --max-width-7xl: 80rem; */
+}
+
+/* Базовые стили */
+@layer base {
+  body {
+    background-color: var(--color-gray-50);
+    color: var(--color-gray-900);
+  }
+}
+
+/* Компоненты */
+@layer components {
+  .btn-primary {
+    background-color: var(--color-blue-600);
+    color: var(--color-white);
+    font-weight: var(--font-weight-medium);
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--border-radius-lg);
+    transition-property: var(--transition-property-colors);
+    transition-duration: var(--transition-duration-200);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-blue-700);
+  }
+
+  .btn-secondary {
+    background-color: var(--color-gray-200);
+    color: var(--color-gray-800);
+    font-weight: var(--font-weight-medium);
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--border-radius-lg);
+    transition-property: var(--transition-property-colors);
+    transition-duration: var(--transition-duration-200);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-gray-300);
+  }
+
+  .card {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow-md);
+    overflow: hidden;
+  }
+
+  .container-custom {
+    max-width: var(--max-width-7xl);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--spacing-4);
+    padding-right: var(--spacing-4);
+  }
+
+  @media (min-width: 640px) {
+    .container-custom {
+      padding-left: var(--spacing-6);
+      padding-right: var(--spacing-6);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-custom {
+      padding-left: var(--spacing-8);
+      padding-right: var(--spacing-8);
+    }
+  }
+}

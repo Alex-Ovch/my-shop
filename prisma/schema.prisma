@@ -1,0 +1,84 @@
+// Настройки Prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Таблица пользователей
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  
+  // Связи с другими таблицами
+  cartItems CartItem[]
+  orders    Order[]
+}
+
+// Таблица товаров
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  imageUrl    String?
+  inStock     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  
+  // Связи с другими таблицами
+  cartItems   CartItem[]
+  orderItems  OrderItem[]
+}
+
+// Таблица корзины
+model CartItem {
+  id        String @id @default(cuid())
+  quantity  Int
+  
+  // Связь с пользователем
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Связь с товаром
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  // Один пользователь не может добавить один товар дважды
+  @@unique([userId, productId])
+}
+
+// Таблица заказов
+model Order {
+  id          String   @id @default(cuid())
+  totalAmount Float
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+  
+  // Связь с пользователем
+  userId      String
+  user        User @relation(fields: [userId], references: [id])
+  
+  // Связь с товарами в заказе
+  orderItems  OrderItem[]
+}
+
+// Таблица товаров в заказе
+model OrderItem {
+  id       String @id @default(cuid())
+  quantity Int
+  price    Float  // Цена на момент заказа
+  
+  // Связь с заказом
+  orderId   String
+  order     Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  // Связь с товаром
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+}
