@@ -8,7 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "vercel-build": "npx prisma generate && npx prisma db push && nuxt build"
+    "vercel-build": "npx prisma generate --no-engine && npx prisma db push && nuxt build"
   },
   "dependencies": {
     "@nuxt/icon": "^1.15.0",
